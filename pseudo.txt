@@ -1,0 +1,17 @@
+the most important thing well need is the actual gameboard.
+now we can create the gameboard using a 3x3 matrix and since we wont need it elsewhere we can probably 
+place it in an IIFE.
+there will be two players 
+player1=X
+player2=O
+now for the logic of the actual game 
+after every move we'll need to switch between the players and make sure
+that the the users can't overwrite already made moves
+since the only difference between the two players would be their markers so instead of creating 2 separate functions it would be better
+if we created an active player and toggled between player1 and player2 using that variable
+as for not being able to overwrite the input that has already been made can we initialize all the cells with a dummy value and 
+a player can only place his move there if it contains that dummy element.
+we can create factory function for the player objects.
+as for the win condition the row and column win condition is pretty easy to implement if grid[a][1], grid[a][2], grid[a][3]=== X || O
+one of the players won else if grid[1][a],grid[2][a], grid[3][a]===X || O then they win. 
+as for the diagonal case we can explicitlly write the condition grid[a][a]==X || O where 0<=a<=2 
