@@ -48,6 +48,7 @@ const GameController = (function() {
     {
       board[i]="";
     }
+    activePlayer=players[0];
   }
   const checkWinner=()=>{
     let activePlayer=getActivePlayer();
@@ -56,8 +57,8 @@ const GameController = (function() {
     {
       const [a,b,c]=winCondition[i];
       if(board[a]==activePlayer.marker &&
-        board[b]==activePlayer.marker &&
-        board[c]==activePlayer.marker)
+         board[b]==activePlayer.marker &&
+         board[c]==activePlayer.marker)
         {
           console.log(`${activePlayer.name} won.`);
           resetBoard();
@@ -75,15 +76,35 @@ const GameController = (function() {
     console.log(`Dropping ${getActivePlayer().name}'s token into spot ${index}...`);
     
     Gameboard.placeMarker(index,activePlayer.marker);
+    DisplayController.updateScreen();
     checkWinner();
     
     switchPlayerTurn();
     printNewRound();
   };
-
-  // Return the public functions
   return { 
     playRound, 
     getActivePlayer 
   };
+})();
+const DisplayController=(function(){
+  const boardDiv=document.querySelector(".tttBoard");
+  const updateScreen=()=>{
+    const board=Gameboard.getBoard();
+    
+    const squares=document.querySelectorAll(".square");
+    squares.forEach((element,index) => {
+      element.textContent=board[index];
+    });
+  }
+  const clickHandler=(e)=>{
+    const selectedSquare=e.target.dataset.index;
+    if(!selectedSquare) return;
+
+    
+    GameController.playRound(selectedSquare);
+    updateScreen();
+  }
+  boardDiv.addEventListener('click',clickHandler);
+  return {updateScreen, clickHandler};
 })();
