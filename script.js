@@ -22,6 +22,7 @@ const GameController = (function() {
     { name: "Player One", marker: "X" },
     { name: "Player Two", marker: "O" }
   ];
+  
   const winCondition=[[0,1,2],
                       [3,4,5],
                       [6,7,8],
@@ -61,8 +62,15 @@ const GameController = (function() {
          board[c]==activePlayer.marker)
         {
           console.log(`${activePlayer.name} won.`);
-          resetBoard();
+          return true;
         }
+    }
+  }
+  const checkTie=()=>{
+    let board=Gameboard.getBoard();
+    if(board.every(cell=> cell != ""))
+    {
+      return true;
     }
   }
 
@@ -77,18 +85,29 @@ const GameController = (function() {
     
     Gameboard.placeMarker(index,activePlayer.marker);
     DisplayController.updateScreen();
-    checkWinner();
-    
+    if(checkWinner())
+    {
+      let active=getActivePlayer();
+    DisplayController.setResultMsg(`${active.name} won`);
+    return;
+    }
+    if(checkTie())
+    {
+      DisplayController.setResultMsg("It's a Tie");
+      return;
+    }
     switchPlayerTurn();
     printNewRound();
   };
   return { 
     playRound, 
-    getActivePlayer 
+    getActivePlayer,
+    resetBoard 
   };
 })();
 const DisplayController=(function(){
   const boardDiv=document.querySelector(".tttBoard");
+  const resultDiv=document.querySelector(".result");
   const updateScreen=()=>{
     const board=Gameboard.getBoard();
     
@@ -105,6 +124,19 @@ const DisplayController=(function(){
     GameController.playRound(selectedSquare);
     updateScreen();
   }
+  const resetButton=()=>{
+    GameController.resetBoard();
+    updateScreen();
+    resultDiv.textContent="";
+  }
+  const setResultMsg=(msg)=>{
+    resultDiv.textContent=msg;
+  }
+  const resetBut=document.querySelector(".reset");
+  resetBut.addEventListener('click', resetButton);
   boardDiv.addEventListener('click',clickHandler);
-  return {updateScreen, clickHandler};
+  return {updateScreen, 
+          clickHandler,
+          setResultMsg};
+
 })();

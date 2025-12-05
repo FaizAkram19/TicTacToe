@@ -1,26 +1,74 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, Helvetica, sans-serif;
+}
+body{
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    gap:25px;
+}
+.longline {
+  border: none;
+  height: 2px;         /* Thickness */
+  background-color: #333; /* Color */
+  margin-top: 10px;    /* Spacing */
+  margin-bottom: 20px;
+  width: 100%;         /* Full width */
+}
 .tttBoard{
     display:grid;
-    grid-template-columns: repeat(3,200px);
-    grid-template-rows: repeat(3,200px);
+    grid-template-columns: repeat(3,175px);
+    grid-template-rows: repeat(3,175px);
     gap:5px;
+    background-color: #333;
     justify-self: center;
-    padding:30px;
-    
+    padding:10px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 .square{
-    background-color: antiquewhite;
+    background-color: #ffffff;
     border: 1px solid black;
+    border-radius: 5px;
     display: flex;
+    font-weight: bold;
     align-items: center;
-    font-size: 3rem;
+    font-size: 4.5rem;
     justify-content: center;
     cursor: pointer;
+    user-select: none; /*prevents the blue highligt due to double-click*/
 }
 header{
-    display: flex;
-    align-items: center;
     font-size: 3rem;
     font-weight: bold;
+    color:#333;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+.result{
+    height:3rem;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap:20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color:#2c3e50;
+}
+.reset{
+    padding:12px 35px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color:#ff4757;
+    color:white;
+    border-radius: 10px;
+    border: none;
+}
+reset::hover{
+    background-color: #ff6b81;
 }
